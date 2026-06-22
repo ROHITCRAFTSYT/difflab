@@ -45,9 +45,11 @@ are reproducible with `python scripts/verify_learning.py` and
 
 ### The model actually learns
 
-A class-conditioned UNet trained from scratch on Fashion-MNIST (one class per
-row). The randomly-initialised model emits noise; after training it produces
-recognizable garments matching each class — approaching the real distribution.
+A class-conditioned UNet trained from scratch on MNIST (one digit 0–9 per row).
+The randomly-initialised model emits noise; after training it produces
+recognizable digits matching each requested class — approaching the real
+distribution. (Trained on CPU; a GPU run with the full config sharpens this
+further.)
 
 <p align="center">
   <img src="assets/learning_compare.png" width="80%" alt="Untrained vs trained vs real"/>

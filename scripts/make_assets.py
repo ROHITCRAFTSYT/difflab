@@ -118,7 +118,7 @@ def learning_compare():
         ax.imshow(_load(p), cmap="gray")
         ax.set_title(t, fontsize=12)
         ax.axis("off")
-    fig.suptitle("Class-conditioned model learns Fashion-MNIST (one class per row)", fontsize=13)
+    fig.suptitle("Class-conditioned model learns MNIST digits (one digit 0-9 per row)", fontsize=13)
     fig.tight_layout()
     fig.savefig(ASSETS / "learning_compare.png", dpi=110, bbox_inches="tight")
     plt.close(fig)

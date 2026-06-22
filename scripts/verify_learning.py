@@ -36,10 +36,7 @@ from difflab.sampling import ddim_sample  # noqa: E402
 from difflab.training.trainer import Trainer  # noqa: E402
 from difflab.utils import make_image_grid, set_seed, tensor_to_pil  # noqa: E402
 
-CLASSES = [
-    "T-shirt", "Trouser", "Pullover", "Dress", "Coat",
-    "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot",
-]
+CLASSES = [str(d) for d in range(10)]  # MNIST digits 0-9, one per row
 
 
 def sample_grid(model, scheduler, n_per_class, device):
@@ -68,9 +65,10 @@ def main():
         task="class_conditioned",
         name="verify_learning",
         model=ModelConfig(
-            # Small 16x16, 2-level, no-attention UNet keeps CPU cost low while
-            # still clearly learning Fashion-MNIST class structure.
-            sample_size=16, in_channels=1, out_channels=1, layers_per_block=1,
+            # Small 24x24, 2-level no-attention UNet. MNIST digits need little
+            # capacity, so a compact model keeps each CPU step fast (~2s) while
+            # still producing clearly legible digits.
+            sample_size=24, in_channels=1, out_channels=1, layers_per_block=1,
             norm_num_groups=8, block_out_channels=(32, 64),
             down_block_types=("DownBlock2D", "DownBlock2D"),
             up_block_types=("UpBlock2D", "UpBlock2D"),
@@ -78,8 +76,8 @@ def main():
         ),
         scheduler=SchedulerConfig(num_train_timesteps=1000, beta_schedule="squaredcos_cap_v2"),
         data=DataConfig(
-            dataset="zalando-datasets/fashion_mnist", split="train",
-            image_column="image", label_column="label", resolution=16,
+            dataset="ylecun/mnist", split="train",
+            image_column="image", label_column="label", resolution=24,
             center_crop=True, random_flip=False, max_samples=args.samples,
         ),
         train=TrainConfig(
@@ -90,7 +88,7 @@ def main():
             # init, so we sample from the actual trained weights instead.
             use_ema=False,
             sample_every_epochs=2,  # progressive sample grids under outputs/.../samples
-            save_every_epochs=args.epochs, num_eval_samples=10, num_inference_steps=50,
+            save_every_epochs=2, num_eval_samples=10, num_inference_steps=50,
         ),
     )
 
