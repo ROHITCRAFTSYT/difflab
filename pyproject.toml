@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "difflab"
+version = "0.1.0"
+description = "A production-grade toolkit for fine-tuning, class-conditioning, DDIM inversion, and audio diffusion."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "difflab authors" }]
+keywords = ["diffusion", "generative-models", "ddpm", "ddim", "audio", "deep-learning"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "torch>=2.1",
+    "diffusers>=0.27",
+    "transformers>=4.38",
+    "accelerate>=0.27",
+    "datasets>=2.18",
+    "huggingface-hub>=0.22",
+    "numpy>=1.24",
+    "Pillow>=9.5",
+    "PyYAML>=6.0",
+    "tqdm>=4.65",
+    "tensorboard>=2.14",
+]
+
+[project.optional-dependencies]
+audio = ["torchaudio>=2.1", "librosa>=0.10", "soundfile>=0.12"]
+docs = ["mkdocs>=1.5", "mkdocs-material>=9.5", "mkdocstrings[python]>=0.24"]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.3",
+    "torchaudio>=2.1",
+    "librosa>=0.10",
+    "soundfile>=0.12",
+    "matplotlib>=3.7",
+    "nbconvert>=7.0",
+    "nbformat>=5.9",
+]
+
+[project.scripts]
+difflab = "difflab.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ROHITCRAFTSYT/difflab"
+Documentation = "https://github.com/ROHITCRAFTSYT/difflab"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+# Notebooks intentionally use compact, exploratory cell style (lambdas, inline
+# expressions); lint the library/tests, not the demo notebooks.
+extend-exclude = ["notebooks", "scripts/_make_notebooks.py", "_executed"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "C4"]
+ignore = ["E501", "B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]

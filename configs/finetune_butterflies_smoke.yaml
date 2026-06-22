@@ -1,0 +1,30 @@
+# Smoke variant of fine-tuning. Still downloads the pretrained UNet + a few
+# images, then runs 2 optimizer steps on CPU. Proves the fine-tune path.
+task: finetune
+name: finetune_smoke
+
+model:
+  pretrained: google/ddpm-cifar10-32
+
+scheduler:
+  num_train_timesteps: 1000
+
+data:
+  dataset: huggan/smithsonian_butterflies_subset
+  split: train
+  image_column: image
+  label_column: null
+  resolution: 32
+  max_samples: 16
+
+train:
+  output_dir: outputs/finetune_smoke
+  epochs: 1
+  max_steps: 2
+  batch_size: 4
+  lr_warmup_steps: 0
+  sample_every_epochs: 1
+  save_every_epochs: 1
+  num_eval_samples: 4
+  num_inference_steps: 4
+  seed: 0

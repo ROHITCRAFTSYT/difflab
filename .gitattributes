@@ -1,0 +1,6 @@
+# Normalize line endings to LF for text; mark binaries so Git doesn't touch them.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.zip binary
+*.ipynb text eol=lf

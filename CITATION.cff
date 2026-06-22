@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "difflab: a production-grade diffusion model toolkit"
+abstract: >-
+  A toolkit for training and applying diffusion models, covering fine-tuning of
+  pretrained models, class-conditioned generation, DDIM inversion for image
+  editing, and spectrogram-domain audio diffusion.
+version: 0.1.0
+date-released: 2026-06-22
+license: MIT
+type: software
+authors:
+  - name: "difflab authors"
+keywords:
+  - diffusion models
+  - generative models
+  - DDPM
+  - DDIM
+  - audio diffusion

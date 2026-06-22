@@ -1,0 +1,14 @@
+# GPU (CUDA) install helper.
+#
+# PyTorch CUDA wheels are not on PyPI by default. On a CUDA 12.1 machine (Colab/Kaggle
+# already ship a working CUDA torch, so you usually only need the line below):
+#
+#   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu121
+#   pip install -r requirements.txt
+#
+# Then install the package:
+#
+#   pip install -e .
+#
+# Optional: xformers for memory-efficient attention with Stable Diffusion.
+xformers>=0.0.23 ; platform_system != "Darwin"
