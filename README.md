@@ -191,44 +191,6 @@ pip install ".[docs]"
 mkdocs serve   # http://127.0.0.1:8000
 ```
 
-## Publishing trained models to Hugging Face Hub
-
-This repository (the **code**) lives on GitHub. Trained model **weights** can
-optionally be published to the [Hugging Face Hub](https://huggingface.co/) once
-you have run a full (non-smoke) training on a GPU. The toolkit handles upload and
-generates a model card automatically.
-
-1. Train a real model on a GPU (e.g. open a notebook on Colab and use the
-   non-smoke config).
-2. Set the Hub fields in your config and provide a token:
-
-   ```yaml
-   hub:
-     push_to_hub: true
-     repo_id: ROHITCRAFTSYT/difflab-fashionmnist   # your-name/model-name
-     private: false
-   ```
-
-   ```bash
-   export HF_TOKEN=hf_xxx        # a write token from huggingface.co/settings/tokens
-   difflab train -c configs/class_conditioned_fashionmnist.yaml
-   ```
-
-3. Or push an existing checkpoint directly:
-
-   ```python
-   from difflab.config import load_config
-   from difflab.hub import push_model_to_hub
-
-   cfg = load_config("configs/class_conditioned_fashionmnist.yaml")
-   cfg.hub.push_to_hub = True
-   cfg.hub.repo_id = "ROHITCRAFTSYT/difflab-fashionmnist"
-   push_model_to_hub("outputs/class_cond_fashionmnist/final", cfg)
-   ```
-
-If `HF_TOKEN` is absent, the upload is skipped with a warning — training never
-fails just because credentials are missing. See [`src/difflab/hub.py`](src/difflab/hub.py).
-
 ## License
 
 MIT — see [LICENSE](LICENSE).
